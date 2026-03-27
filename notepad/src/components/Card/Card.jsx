@@ -24,4 +24,5 @@ function Card({task, /*onEdit, onDelete, change_st*/}) {
     )
 }
 
+
 export default Card
