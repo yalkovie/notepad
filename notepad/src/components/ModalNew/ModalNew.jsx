@@ -6,6 +6,7 @@ function ModalNew({task, isOpen, onClose, onSave}) {
     let [title, setTitle] = useState('')
     let [descrip, setDescrip] = useState('')
     let [date, setDate] = useState('')
+
     useEffect(() => {
         if (task) {
             setTitle(task.title)
@@ -16,7 +17,8 @@ function ModalNew({task, isOpen, onClose, onSave}) {
             setDescrip('')
             setDate('')
         }
-    })
+    }, [task])
+
     const handleSubmit = (el) => {
         el.preventDefault();
         onSave({
@@ -32,16 +34,15 @@ function ModalNew({task, isOpen, onClose, onSave}) {
     return(
         <>
         <h2>{task ? 'Редактировать задачу' : 'Новая задача'}</h2>
-        <h2>Заголовок</h2>
         <form onSubmit={handleSubmit}>
             <input type="text" required placeholder='Заголовок' onChange={el => (setTitle(el.target.value))}/>
             <textarea required placeholder='Описание' onChange={el => (setDescrip(el.target.value))}></textarea>
             <input type="date"required onChange={el => (setDate(el.target.value))}/>
+            <div>
+                <button type='submit'>Сохранить</button>
+                <button onClick={onClose}>Отмена</button>
+            </div>
         </form>
-        <div>
-            <button onClick={onSave}>Сохранить</button>
-            <button onClick={onClose}>Отмена</button>
-        </div>
         </>
     )
 }

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import Window from './components/Window/Window.jsx'
 import ModalNew from './components/ModalNew/ModalNew.jsx'
+import Card from './components/Card/Card.jsx'
 
 function App() {
 
@@ -9,6 +10,9 @@ function App() {
     let timeTasks = localStorage.getItem('localTasks')
     return timeTasks ? JSON.parse(timeTasks) : []
   })
+
+  let [modalTask, setModalTask] = useState(null)
+
   useEffect(() => {
     localStorage.setItem('localTasks', JSON.stringify(tasks))
   }, [tasks])
@@ -26,10 +30,15 @@ function App() {
     } else {
       setTasks([...tasks, {...task, id : Date.now(), state : 'Поставленная'}])
     }
-
+    console.log(tasks);
   }
 
   function newTask() {
+    setIsOpen(true)
+  }
+
+  function onEdit(task) {
+    setModalTask(task)
     setIsOpen(true)
   }
 
@@ -47,12 +56,12 @@ function App() {
           </div>
         </header>
 
-        <Window title={'ПОСТАВЛЕННЫЕ'} backgroundColor={'#ff99ff'} /*tasks={None} onEdit={None} onDelete={None} change_st={None}*//>
-        <Window title={'В РАБОТЕ'} backgroundColor={'#99ffff'} /*tasks={None} onEdit={None} onDelete={None} change_st={None}*//>
-        <Window title={'ВЫПОЛНЕННЫЕ'} backgroundColor={'#99ff99'} /*tasks={None} onEdit={None} onDelete={None} change_st={None}*//>
+        <Window title={'ПОСТАВЛЕННЫЕ'} backgroundColor={'#ff99ff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Поставленная')}/* onDelete={None} change_st={None}*//>
+        <Window title={'В РАБОТЕ'} backgroundColor={'#99ffff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'В работе')}/* onDelete={None} change_st={None}*//>
+        <Window title={'ВЫПОЛНЕННЫЕ'} backgroundColor={'#99ff99'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Выполненная')}/* onDelete={None} change_st={None}*//>
       </div>
 
-      <ModalNew task={null} isOpen={isOpen} onClose={onClose} onSave={onSave}/>
+      <ModalNew task={modalTask} isOpen={isOpen} onClose={onClose} onSave={onSave}/>
     </>
   )
 }
