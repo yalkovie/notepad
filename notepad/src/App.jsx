@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import Window from './components/Window/Window.jsx'
 import ModalNew from './components/ModalNew/ModalNew.jsx'
-import Card from './components/Card/Card.jsx'
+import ModalDelete from './components/ModalDelete/ModalDelete.jsx'
 
 function App() {
 
@@ -12,12 +12,14 @@ function App() {
   })
 
   let [modalTask, setModalTask] = useState(null)
+  let [deleteTask, setDeleteTask] = useState(null)
 
   useEffect(() => {
     localStorage.setItem('localTasks', JSON.stringify(tasks))
   }, [tasks])
 
   let [isOpen, setIsOpen] = useState(false)
+  let [deleteIsOpen, setDeleteIsOpen] = useState(false)
 
   function onClose() {
     setIsOpen(false)
@@ -26,11 +28,21 @@ function App() {
   function onSave(task) {
     onClose()
     if (task.id) {
-      setTasks(tasks.map((el) => {el.id === task.id ? task : el}))
+      setTasks(tasks.map((el) => (el.id === task.id ? task : el)))
     } else {
       setTasks([...tasks, {...task, id : Date.now(), state : 'Поставленная'}])
     }
-    console.log(tasks);
+    return tasks;
+  }
+
+  function onDelete (id) {
+    setTasks(tasks.filter((task) => task.id != id))
+    setDeleteIsOpen(false)
+  }
+
+  function confirmDelete (task) {
+    setDeleteTask(task)
+    setDeleteIsOpen(true)
   }
 
   function newTask() {
@@ -56,12 +68,13 @@ function App() {
           </div>
         </header>
 
-        <Window title={'ПОСТАВЛЕННЫЕ'} backgroundColor={'#ff99ff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Поставленная')}/* onDelete={None} change_st={None}*//>
-        <Window title={'В РАБОТЕ'} backgroundColor={'#99ffff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'В работе')}/* onDelete={None} change_st={None}*//>
-        <Window title={'ВЫПОЛНЕННЫЕ'} backgroundColor={'#99ff99'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Выполненная')}/* onDelete={None} change_st={None}*//>
+        <Window title={'ПОСТАВЛЕННЫЕ'} backgroundColor={'#ff99ff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Поставленная')} onDelete={() => {confirmDelete(deleteTask)}} /*change_st={None}*//>
+        <Window title={'В РАБОТЕ'} backgroundColor={'#99ffff'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'В работе')} onDelete={() => {confirmDelete(deleteTask)}} /*change_st={None}*//>
+        <Window title={'ВЫПОЛНЕННЫЕ'} backgroundColor={'#99ff99'} onEdit={onEdit} tasks={tasks.filter((task) => task.state === 'Выполненная')} onDelete={() => {confirmDelete(deleteTask)}} /* change_st={None}*//>
       </div>
 
       <ModalNew task={modalTask} isOpen={isOpen} onClose={onClose} onSave={onSave}/>
+      <ModalDelete isOpen={deleteIsOpen} onClose={() => {setDeleteIsOpen(false)}} onConfirm={() => {onDelete(deleteTask.id)}} taskTitle={deleteTask.title}/>
     </>
   )
 }

@@ -35,9 +35,9 @@ function ModalNew({task, isOpen, onClose, onSave}) {
         <>
         <h2>{task ? 'Редактировать задачу' : 'Новая задача'}</h2>
         <form onSubmit={handleSubmit}>
-            <input type="text" required placeholder='Заголовок' onChange={el => (setTitle(el.target.value))}/>
-            <textarea required placeholder='Описание' onChange={el => (setDescrip(el.target.value))}></textarea>
-            <input type="date"required onChange={el => (setDate(el.target.value))}/>
+            <input type="text" required placeholder='Заголовок' onChange={el => (setTitle(el.target.value))} value={title}/>
+            <textarea required placeholder='Описание' onChange={el => (setDescrip(el.target.value))} value={descrip}></textarea>
+            <input type="date"required onChange={el => (setDate(el.target.value))} value={date}/>
             <div>
                 <button type='submit'>Сохранить</button>
                 <button onClick={onClose}>Отмена</button>

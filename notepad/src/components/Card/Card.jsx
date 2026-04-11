@@ -1,12 +1,12 @@
 import './Card.less'
 import Button from '../Button/Button.jsx'
 
-function Card({task, onEdit/*onDelete, change_st*/}) {
+function Card({task, onEdit, onDelete /*change_st*/}) {
     return (
         <>
         <header> 
             <h1>{task.title}</h1>
-            <button /*onClick={onDelete}*/ className='delete'>x</button>
+            <button onClick={() => {onDelete(task)}} className='delete'>x</button>
         </header>
 
         <p>{task.desc}</p> 
