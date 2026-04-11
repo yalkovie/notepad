@@ -36,8 +36,9 @@ function App() {
   }
 
   function onDelete (id) {
-    setTasks(tasks.filter((task) => task.id != id))
+    setTasks(tasks.filter((task) => task.id !== id))
     setDeleteIsOpen(false)
+    console.log(tasks);
   }
 
   function confirmDelete (task) {
@@ -74,7 +75,7 @@ function App() {
       </div>
 
       <ModalNew task={modalTask} isOpen={isOpen} onClose={onClose} onSave={onSave}/>
-      <ModalDelete isOpen={deleteIsOpen} onClose={() => {setDeleteIsOpen(false)}} onConfirm={() => {onDelete(deleteTask.id)}} taskTitle={deleteTask.title}/>
+      <ModalDelete isOpen={deleteIsOpen} onClose={() => {setDeleteIsOpen(false)}} onConfirm={() => {onDelete(deleteTask?.id)}} taskTitle={deleteTask?.title}/>
     </>
   )
 }
