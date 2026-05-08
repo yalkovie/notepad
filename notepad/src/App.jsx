@@ -41,7 +41,6 @@ function App() {
   function onDelete(id) {
     setTasks(tasks.filter((task) => task.id !== id))
     setDeleteIsOpen(false)
-    console.log(tasks);
   }
 
   function confirmDelete(task) {
@@ -85,10 +84,7 @@ function App() {
   }
 
   function start_handle_change (el) {
-    console.log(el);
     let value = el.target.value
-    console.log(value);
-    console.log(value[0]);
     if (value === '' || value.length === 10) {
       if (pars_date(value)) {
         setStartDate(value)

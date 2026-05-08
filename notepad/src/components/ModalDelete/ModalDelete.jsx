@@ -6,11 +6,13 @@ function ModalDelete({isOpen, onClose, onConfirm, taskTitle}) {
 
     return (
         <>
+        <div id='modal_del'>
             <h2>Вы уверены, что хотите удалить задачу "{taskTitle}"?</h2>
-            <div>
+            <div className='modal_btn'>
                 <button onClick={onConfirm}>Удалить</button>
                 <button onClick={onClose}>Отмена</button>
             </div>
+        </div>
         </>
     )
 }

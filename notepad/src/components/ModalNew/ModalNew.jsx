@@ -33,16 +33,19 @@ function ModalNew({task, isOpen, onClose, onSave}) {
 
     return(
         <>
-        <h2>{task ? 'Редактировать задачу' : 'Новая задача'}</h2>
-        <form onSubmit={handleSubmit}>
-            <input type="text" required placeholder='Заголовок' onChange={el => (setTitle(el.target.value))} value={title}/>
-            <textarea required placeholder='Описание' onChange={el => (setDescrip(el.target.value))} value={descrip}></textarea>
-            <input type="date"required onChange={el => (setDate(el.target.value))} value={date}/>
-            <div>
-                <button type='submit'>Сохранить</button>
-                <button onClick={onClose}>Отмена</button>
-            </div>
-        </form>
+        <div id='modal_new'>
+            <h2>{task ? 'Редактировать задачу' : 'Новая задача'}</h2>
+            <form className='card_form' onSubmit={handleSubmit}>
+                <input type="text" required placeholder='Заголовок' onChange={el => (setTitle(el.target.value))} value={title}/>
+                <textarea required placeholder='Описание' onChange={el => (setDescrip(el.target.value))} value={descrip}></textarea>
+                <input type="date"required onChange={el => (setDate(el.target.value))} value={date}/>
+                <div className='modal_btn'>
+                    <button type='submit'>Сохранить</button>
+                    <button onClick={onClose}>Отмена</button>
+                </div>
+            </form>
+        </div>
+
         </>
     )
 }

@@ -26,3 +26,19 @@ header {
   border: 2px solid grey;
   border-radius: 10px;
 }
+
+#modal_new, #modal_del {
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+
+.modal_btn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card_form {
+  display: flex;
+  flex-direction: column;
+}
