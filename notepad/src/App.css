@@ -10,3 +10,19 @@ header {
   padding: 20px;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+#window {
+  display: flex;
+  justify-content: space-around;
+}
+
+.wind {
+  width: 30vw;
+  text-align: center;
+}
+
+.card {
+  margin: 2vw;
+  border: 2px solid grey;
+  border-radius: 10px;
+}
